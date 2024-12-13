@@ -1,0 +1,183 @@
+create database market;
+use market;
+create table admain(
+id int,
+a_name varchar(255),
+emailid varchar(250),
+moblie_number long,
+PRIMARY KEY(id)
+);
+INSERT INTO admain(id,a_name,emailid,moblie_number)
+VALUES(1,'Joe','joe123@gmail.com',9629504128),
+(2,'Raja','Raja123@gmail.com',9629508928),
+(3,'Kumer','Kumer1453@gmail.com',9629502390),
+(4,'Mani','Mani453@gmail.com',9629500897),
+(5,'Vijay','Vijay783@gmail.com',9629501238),
+(6,'Jeo','jeo1023@gmail.com',9629534108);
+
+
+
+
+SELECT * FROM market.admain;
+SELECT a.a_name,a.moblie_number
+FROM admain AS a;
+SELECT *
+FROM admain
+WHERE a_name='Raja';
+SELECT * FROM admain
+WHERE a_name ='Raja'AND a_name LIKE 'R%';
+SELECT * FROM admain
+WHERE a_name ='Raja'OR a_name='Jeo';
+SELECT *FROM admain
+WHERE NOT a_name='joe';
+SELECT * FROM admain
+WHERE id NOT BETWEEN 4 AND 6;
+SELECT * FROM admain
+WHERE a_name NOT IN('Raja','Kumer');
+UPDATE admain
+SET a_name='Vimal',emailid='rvvimal345@gmail.com'
+WHERE id=5;
+DELETE FROM admain WHERE id=5;
+SELECT id FROM admain WHERE id IS NOT NULL;
+SELECT*FROM admain
+WHERE id BETWEEN 2 AND 4;
+SELECT  * FROM admain 
+LIMIT 3;
+SELECT * FROM admain
+WHERE a_name='Raja'
+LIMIT 4;
+SELECT * FROM admain
+ORDER BY a_name DESC
+LIMIT 5;
+SELECT a_name FROM admain LIMIT 3 OFFSET 3;
+DELETE FROM admain WHERE id=3;
+SELECT MAX(id),moblie_number
+FROM admain
+/*WHERE moblie_number=9629504128*/
+GROUP BY moblie_number
+HAVING MAX(id) <6;
+
+
+
+
+
+
+
+
+SELECT * FROM market.admain;
+SELECT id, LENGTH(a_name) AS LengthOfString FROM admain;
+SELECT UPPER(a_name) AS UppercaseName FROM admain;
+SELECT LOWER(a_name) AS lowercasename FROM admain;
+SELECT REVERSE(a_name) FROM admain;
+SELECT REPLACE(a_name, 'Joe', 'John') AS modified_name
+ FROM admain;
+SELECT SUBSTR(a_name,1,3) AS ExtractString FROM admain;
+SELECT a_name,INSTR(a_name,"j") FROM admain;
+SELECT 5 % 2;
+
+
+
+
+
+
+
+
+
+create database mess;
+use mess;
+CREATE TABLE foods (
+    id INT,
+    a_name CHAR(255),
+    food_type VARCHAR(200),
+    amount long,  
+    parent_id INT,  
+    PRIMARY KEY(id),
+    FOREIGN KEY(parent_id) REFERENCES food(id)  
+);
+
+insert into foods(id,a_name,food_type,amount)
+values(1,'Raja','NON-Veg',4000),
+(2,'Rose','Veg',3000),
+(3,'Mani','Veg',3000);
+
+
+
+
+
+
+
+SELECT * FROM mess.food;
+SELECT MIN(amount) FROM food;
+SELECT MAX(amount) FROM food;
+SELECT MIN(amount) AS Price FROM food;
+SELECT MIN(amount) AS Price, Id FROM food GROUP BY id;
+SELECT COUNT(*) FROM food;
+SELECT COUNT(id) FROM food WHERE amount =3000;
+SELECT COUNT(DISTINCT amount) FROM food;
+SELECT COUNT(*) AS Numbers_of_count
+FROM food;
+SELECT SUM(amount) FROM food WHERE id=2;
+SELECT SUM(amount*10) FROM food ;
+SELECT  AVG(amount) FROM food;
+SELECT AVG(amount) FROM food WHERE id=2;
+SELECT amount, LENGTH(a_name) AS LengthOfString FROM food;
+
+
+
+
+
+
+SELECT * FROM mess.food;
+SELECT food.id,foods.a_name,food.food_type,food.amount
+FROM food
+INNER JOIN foods
+ON food.id=foods.id;
+SELECT foods.id,food.a_name,food.amount
+FROM foods
+LEFT JOIN food
+ON foods.id=food.id ORDER BY food.a_name;
+SELECT food.amount,foods.a_name
+FROM food
+RIGHT JOIN foods
+ON food.id=foods.id
+ORDER BY food.id;
+SELECT foods.a_name,foods.id
+FROM foods
+CROSS JOIN food ON foods.id=food.id
+ORDER BY foods.a_name;
+SELECT food.a_name AS first_name,foods.a_name AS second_name,food.amount
+FROM food,foods
+WHERE food.id<>foods.id AND food.amount=foods.amount 
+ORDER BY food.amount;
+SELECT a_name FROM food
+UNION 
+SELECT a_name FROM foods ORDER BY a_name;
+SELECT a_name FROM food
+WHERE EXISTS (SELECT a_name FROM foods WHERE foods.id=food.id 
+AND amount>2000 );
+SELECT a_name FROM food1
+WHERE a_name= ANY(SELECT a_name FROM food12 WHERE amount=40);
+SELECT a_name FROM food1
+WHERE a_name= ALL(SELECT a_name FROM food12 WHERE amount=40);
+SELECT  id,amount,
+CASE WHEN amount >30 THEN 'The amount is greater than 30'
+WHEN amount =20 THEN 'The amount is 20'
+ELSE 'The amount is under 20'
+END AS amounttext
+FROM food12;
+SHOW INDEXES FROM food;
+DROP INDEX type_paid_v2 ON food;
+CREATE INDEX paid1 ON food (id,a_name,food_type);
+CREATE UNIQUE INDEX pass ON food(id,a_name,food_type);
+SHOW INDEXES FROM foods;
+ALTER TABLE food ADD INDEX(a_name);
+
+
+
+SELECT * FROM market.admain;
+SELECT *FROM admain
+WHERE moblie_number= 9629504128
+GROUP BY id=id
+ORDER BY a_name=id;
+
+
